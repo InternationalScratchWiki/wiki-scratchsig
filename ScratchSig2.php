@@ -14,11 +14,6 @@ if (!defined('MEDIAWIKI')) {
 }
 
 
-// Don't dump DOM errors onto page
-
-error_reporting(0);
-
-
 // Hooks
 
 $wgExtensionFunctions[] = 'sigSetup';
