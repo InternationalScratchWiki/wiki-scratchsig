@@ -63,28 +63,34 @@ function sigGetAvatarUrl ($username) {
     return $sig_imageUrls[$username];
 }
 
+function scratchUsernameFromWikiText($username) {
+	return preg_replace('/[^a-zA-Z0-9\-_]/', '', str_replace(' ', '_', $username));
+}
+
 
 // Called to output HTML for <scratchsig> tag
 
 function sigRenderTag ($input, array $args, Parser $parser, PPFrame $frame) {
-    $username = htmlspecialchars($input);
+    $username = scratchUsernameFromWikiText($input);
+	
+	$html_username = htmlspecialchars($username);
 
     $img_url = sigGetAvatarUrl($username);
 
     $o =  '<br>'
         . '<span class="scratch-sig">'
-        . '<a href="/wiki/User:'.$username.'">'
+        . '<a href="/wiki/User:'.$html_username.'">'
         . '<img src="' . $img_url . '" width="18px" height="18px">'
         . '</a>'
         . ' '
-        . '<a href="/wiki/User:'.$username.'">'
-        . '<b>'.$username.'</b>'
+        . '<a href="/wiki/User:'.$html_username.'">'
+        . '<b>'.$html_username.'</b>'
         . '</a>'
         . ' '
         . '('
-        . '<a href="/wiki/User_Talk:'.$username.'">talk</a>'
+        . '<a href="/wiki/User_Talk:'.$html_username.'">talk</a>'
         . ' | '
-        . '<a href="/wiki/Special:Contributions/'.$username.'">contribs</a>'
+        . '<a href="/wiki/Special:Contributions/'.$html_username.'">contribs</a>'
         . ')'
         . '</span>';
 
